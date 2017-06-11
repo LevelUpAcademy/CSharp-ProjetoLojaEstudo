@@ -1,0 +1,109 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #1d1e20 !important;
+}
+
+.container{
+    color:white!important;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+.header {
+    background-color: transparent;
+    color: #71cb1d;
+    text-align: center;
+}
+
+.product-thumb {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px 30px;
+    box-shadow: 3px 2px 20px 5px #131313;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-left:10px;
+    width: 31%;
+}
+
+    .product-thumb h3 {
+        color: #71cb1d;
+        overflow: hidden;
+        height: 30px;
+    }
+
+    .product-thumb a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .product-thumb p{
+        height:20px;
+        overflow:hidden;
+    }
+
+    .product-thumb .btn {
+        background-color: #71cb1d !important;
+        border: none;
+    }
+
+    .white{
+        background-color:white;
+        margin-top:30px;
+        border-radius:10px;
+        color: gray;
+    }
+
+    .product-details .image{
+        text-align:center;
+    }
+
+    .product-details img{
+        width:60%;
+        margin:0 auto;
+    }
+
+    .product-details h3 {
+        color:#71cb1d;
+        margin-top:100px;
+    }
+
+    .product-details p{
+        font-size:20px;
+    }
+
+    .product-details .btn{
+        background-color:#71cb1d;
+        padding:10px 60px;
+        border:none;
+    }
+
+    .product-details .description{
+        padding: 15px 30px 50px 30px;
+       
+    }
+    .product-details .description h4{
+        text-align:center;
+        color:#71cb1d;
+    }

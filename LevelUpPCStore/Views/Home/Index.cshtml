@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <p class="pull-right"><span class="glyphicon glyphicon-shopping-cart"></span> ( @ViewBag.QtdProducts )</p>
+</div>
+
+<div class="row">
+    @foreach (Product p in (List<Product>)ViewBag.Products)
+    {
+        <div class="col-md-4 product-thumb">
+            <h3>@p.Title</h3>
+            <p>@p.Description</p>
+            <p>R$ @p.Price</p>
+            <p>Quantidade: @p.Qtt</p>
+
+            <a href="/products/info/@p.Id" class="btn btn-primary">Comprar</a>
+        </div>
+    }
+</div>
