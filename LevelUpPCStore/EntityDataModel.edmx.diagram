@@ -5,12 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8bb9434bcf6442a4bc45d5ad338d29fe" Name="Diagram1">
-        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Category" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Cart" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Category" Width="1.5" PointX="0.75" PointY="1.5" />
         <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Product" Width="1.5" PointX="3" PointY="1" />
-        <AssociationConnector Association="LevelUpPCStoreDBModel.FK_Product_Category" />
-        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Cart" Width="1.5" PointX="0.75" PointY="5.625" />
-        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Product_Cart" Width="1.5" PointX="3" PointY="1.25" />
+        <EntityTypeShape EntityType="LevelUpPCStoreDBModel.Product_Cart" Width="1.5" PointX="5.25" PointY="1.25" />
         <AssociationConnector Association="LevelUpPCStoreDBModel.FK_Product_Cart_Cart" />
+        <AssociationConnector Association="LevelUpPCStoreDBModel.FK_Product_Category" />
         <AssociationConnector Association="LevelUpPCStoreDBModel.FK_Product_Cart_Product" />
       </Diagram>
     </edmx:Diagrams>

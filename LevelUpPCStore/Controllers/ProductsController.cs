@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LevelUpPCStore;
+using System.IO;
 
 namespace LevelUpPCStore.Controllers
 {
@@ -48,17 +49,67 @@ namespace LevelUpPCStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,Image,Price,Qtt,FK_Id_Category")] Product product)
+        public ActionResult Create([Bind(Include = "Id,Title,ImagePosted,Description,Price,Qtt,FK_Id_Category")] Product product, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    
+
+                    Product p = db.Products.Add(product);
+                    db.SaveChanges();
+
+                    var input = Request.Files[0].InputStream;
+                    var extension = Request.Files[0].FileName.Split('.')[1];
+
+                    string path = SavePicture(input, p.Id, extension);
+
+                    p.Image = path;
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.FK_Id_Category = new SelectList(db.Categories, "Id", "Title", product.FK_Id_Category);
+                return View(product);
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
-            ViewBag.FK_Id_Category = new SelectList(db.Categories, "Id", "Title", product.FK_Id_Category);
-            return View(product);
+        }
+
+        private string SavePicture(Stream input, int id, string extension)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+                System.IO.File.WriteAllBytes(Server.MapPath("~/Images/Products/Pic-" + id + "." + extension), ms.ToArray());
+            }
+
+            return "/Images/Products/Pic-" + id + "." + extension;
+        }
+
+        private string SaveImage(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                var arraybytes =  ms.ToArray();
+            }
+            return "";
+
         }
 
         // GET: Products/Edit/5

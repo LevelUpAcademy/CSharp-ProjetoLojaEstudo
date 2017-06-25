@@ -23,7 +23,7 @@ namespace LevelUpPCStore
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public Nullable<double> Price { get; set; }
         public int Qtt { get; set; }
         public Nullable<int> FK_Id_Category { get; set; }

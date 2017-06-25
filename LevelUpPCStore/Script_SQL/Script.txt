@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [LevelUpPCStoreDB]    Script Date: 10/06/2017 21:56:51 ******/
+/****** Object:  Database [LevelUpPCStoreDB]    Script Date: 24/06/2017 21:42:39 ******/
 CREATE DATABASE [LevelUpPCStoreDB]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -75,7 +75,7 @@ ALTER DATABASE [LevelUpPCStoreDB] SET DELAYED_DURABILITY = DISABLED
 GO
 USE [LevelUpPCStoreDB]
 GO
-/****** Object:  Table [dbo].[Cart]    Script Date: 10/06/2017 21:56:51 ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 24/06/2017 21:42:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -89,7 +89,7 @@ CREATE TABLE [dbo].[Cart](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 10/06/2017 21:56:51 ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 24/06/2017 21:42:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -104,7 +104,7 @@ CREATE TABLE [dbo].[Category](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 10/06/2017 21:56:51 ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 24/06/2017 21:42:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +115,7 @@ CREATE TABLE [dbo].[Product](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Title] [nvarchar](255) NOT NULL,
 	[Description] [varchar](max) NULL,
-	[Image] [binary](1000) NULL,
+	[Image] [nvarchar](max) NULL,
 	[Price] [float] NULL,
 	[Qtt] [int] NOT NULL,
 	[FK_Id_Category] [int] NULL,
@@ -128,7 +128,7 @@ CREATE TABLE [dbo].[Product](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Product_Cart]    Script Date: 10/06/2017 21:56:51 ******/
+/****** Object:  Table [dbo].[Product_Cart]    Script Date: 24/06/2017 21:42:40 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

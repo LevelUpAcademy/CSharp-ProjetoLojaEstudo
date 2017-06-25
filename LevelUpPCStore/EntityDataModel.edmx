@@ -25,7 +25,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
-          <Property Name="Image" Type="binary" MaxLength="1000" />
+          <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="Price" Type="float" />
           <Property Name="Qtt" Type="int" Nullable="false" />
           <Property Name="FK_Id_Category" Type="int" />
@@ -98,23 +98,30 @@
     <edmx:ConceptualModels>
       <Schema Namespace="LevelUpPCStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="LevelUpPCStoreDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carts" EntityType="LevelUpPCStoreDBModel.Cart" />
           <EntitySet Name="Categories" EntityType="LevelUpPCStoreDBModel.Category" />
           <EntitySet Name="Products" EntityType="LevelUpPCStoreDBModel.Product" />
-          <AssociationSet Name="FK_Product_Category" Association="LevelUpPCStoreDBModel.FK_Product_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <EntitySet Name="Carts" EntityType="LevelUpPCStoreDBModel.Cart" />
           <EntitySet Name="Product_Cart" EntityType="LevelUpPCStoreDBModel.Product_Cart" />
           <AssociationSet Name="FK_Product_Cart_Cart" Association="LevelUpPCStoreDBModel.FK_Product_Cart_Cart">
             <End Role="Cart" EntitySet="Carts" />
             <End Role="Product_Cart" EntitySet="Product_Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="LevelUpPCStoreDBModel.FK_Product_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Cart_Product" Association="LevelUpPCStoreDBModel.FK_Product_Cart_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Product_Cart" EntitySet="Product_Cart" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Product_Cart" Relationship="LevelUpPCStoreDBModel.FK_Product_Cart_Cart" FromRole="Cart" ToRole="Product_Cart" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -130,31 +137,12 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Image" Type="Binary" MaxLength="1000" FixedLength="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Double" />
           <Property Name="Qtt" Type="Int32" Nullable="false" />
           <Property Name="FK_Id_Category" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="LevelUpPCStoreDBModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Product_Cart" Relationship="LevelUpPCStoreDBModel.FK_Product_Cart_Product" FromRole="Product" ToRole="Product_Cart" />
-        </EntityType>
-        <Association Name="FK_Product_Category">
-          <End Type="LevelUpPCStoreDBModel.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="LevelUpPCStoreDBModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="FK_Id_Category" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Cart">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Product_Cart" Relationship="LevelUpPCStoreDBModel.FK_Product_Cart_Cart" FromRole="Cart" ToRole="Product_Cart" />
         </EntityType>
         <EntityType Name="Product_Cart">
           <Key>
@@ -179,6 +167,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Category">
+          <End Type="LevelUpPCStoreDBModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="LevelUpPCStoreDBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="FK_Id_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Cart_Product">
           <End Type="LevelUpPCStoreDBModel.Product" Role="Product" Multiplicity="1" />
           <End Type="LevelUpPCStoreDBModel.Product_Cart" Role="Product_Cart" Multiplicity="*" />
@@ -191,12 +191,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LevelUpPCStoreDBModelStoreContainer" CdmEntityContainer="LevelUpPCStoreDBEntities">
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="LevelUpPCStoreDBModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="LevelUpPCStoreDBModel.Category">
               <MappingFragment StoreEntitySet="Category">
@@ -214,13 +221,6 @@
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="LevelUpPCStoreDBModel.Cart">
-              <MappingFragment StoreEntitySet="Cart">
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
